@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+    --color-electric-blue: #7DF9FF;
+    --color-hover-electric-blue: #67E0F4;
+}

@@ -1,0 +1,1 @@
+{"root":["./src/app.ts","./src/index.ts","./src/types.ts","./src/config/mongo.ts","./src/config/redis.ts","./src/controller/authcontroller.ts","./src/controller/checks.ts","./src/models/conversation.ts","./src/models/auth.ts","./src/routes/authroutes.ts","./src/routes/checks.ts"],"version":"5.8.3"}
