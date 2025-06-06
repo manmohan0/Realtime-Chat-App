@@ -151,7 +151,7 @@ wss.on('connection', (ws: WebSocket) => {
           }
         });
       }
-    }
+    } 
   });
   ws.on('close', () => {
     const userId = (ws as unknown as ExtendedWebSocket).userId;
