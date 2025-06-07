@@ -40,6 +40,7 @@ export function Home () {
 
     useEffect(() => {
         if (user && ws.readyState === WebSocket.OPEN) {
+            console.log("WebSocket is open, sending getConversation message");
             ws.send(JSON.stringify({ type: "getConversation", message: { userId: user._id }, currentUserId: user._id }));
         }
 
