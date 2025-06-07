@@ -27,7 +27,7 @@ export type Message = {
 };
 
 export type Conversation = {
-  _id: string;
+  _id?: string;
   name: string;
   isGroup: boolean;
   participants: User[];
