@@ -157,7 +157,7 @@ export function Home () {
         if (user && conversation) {
             const message = {
                 currentUserId: user?._id,
-                receiverId: conversation.isGroup && conversation._id,
+                receiverId: conversation.isGroup ? conversation._id : conversation.participants[0]._id,
                 isGroup: conversation.isGroup
             }
             
@@ -274,7 +274,7 @@ export function Home () {
                         }} className="flex w-full p-2 justify-between hover:bg-hover-electric-blue hover:cursor-pointer border-b">
                             <span className="flex flex-col w-fit">
                                 <span>
-                                    {JSON.stringify(conversation)}
+                                    
                                     {conversation.isGroup ? conversation.name : conversation.participants.filter((participant) => participant.name !== user?.name).map((p) => p.name)}
                                 </span>
                                 <span>
