@@ -23,7 +23,8 @@ exports.app = app;
 app.use((0, cors_1.default)({
     origin: process.env.NODE_ENV === "production" ? process.env.FRONTEND : 'http://localhost:5173',
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type']
+    allowedHeaders: ['Content-Type'],
+    credentials: true,
 }));
 app.use(express_1.default.json());
 app.use('/auth', authRoutes_1.authRoutes);

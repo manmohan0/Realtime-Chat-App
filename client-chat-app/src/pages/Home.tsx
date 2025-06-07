@@ -295,7 +295,7 @@ export function Home () {
                 </div>
                 {currentConversation ? <div className="flex flex-col basis-2/3 justify-between">
                     <div className="flex flex-col font-bold p-4 bg-electric-blue">
-                        {currentConversation.name}
+                        {currentConversation.isGroup}
                         {currentConversation.isGroup ? currentConversation.name : currentParticipants?.filter((participant) => (participant._id !== user?._id)).map((participant) => (participant.name))}
                     </div>
                     
