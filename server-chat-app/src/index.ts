@@ -65,7 +65,7 @@ wss.on('connection', (ws: WebSocket) => {
             isGroup: false,
             participants: [cMessage.currentUserId, cMessage.receiverId]
           });
-          newConversation.save();
+          await newConversation.save();
 
           const receiver = await user.findById(cMessage.receiverId);
           
@@ -93,7 +93,7 @@ wss.on('connection', (ws: WebSocket) => {
             isGroup: false,
             participants: [cMessage.currentUserId, cMessage.receiverId]
           });
-          newConversation.save();
+          await newConversation.save();
 
           const receiver = await user.findById(newConversation.participants);
 
@@ -108,7 +108,7 @@ wss.on('connection', (ws: WebSocket) => {
           conversation: new mongoose.Types.ObjectId(conversation._id),
           content: cMessage.content,
         })
-        newMessage.save();
+        await newMessage.save();
 
         const newMsg = {
           sender: cMessage.currentUserId,
@@ -142,7 +142,7 @@ wss.on('connection', (ws: WebSocket) => {
           name: cMessage.name,
           admin: [cMessage.currentUserId]
         });
-        groupConversation.save();
+        await groupConversation.save();
 
         const participants = await Promise.all(await user.find({ _id: { $in: cMessage.participants } }));
 
