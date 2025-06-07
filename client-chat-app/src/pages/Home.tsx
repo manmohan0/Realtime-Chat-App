@@ -60,6 +60,7 @@ export function Home () {
                     const conversation = message.conversation as Conversation;
                     const participants = message.participants as User[];
                     const messages = message.messages as Message[];
+                    console.log(conversation.name, conversation.isGroup)
                     setCurrentConversation(conversation);
                     setCurrentParticipants(participants);
                     setMessages(messages);
@@ -295,7 +296,6 @@ export function Home () {
                 </div>
                 {currentConversation ? <div className="flex flex-col basis-2/3 justify-between">
                     <div className="flex flex-col font-bold p-4 bg-electric-blue">
-                        {currentConversation.isGroup}
                         {currentConversation.isGroup ? currentConversation.name : currentParticipants?.filter((participant) => (participant._id !== user?._id)).map((participant) => (participant.name))}
                     </div>
                     
