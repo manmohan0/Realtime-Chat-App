@@ -54,10 +54,12 @@ wss.on('connection', (ws: WebSocket) => {
         }
         
         let conversation;
-        if (cMessage.isGroup) {
-          conversation = await Conversation.findOne({ _id: cMessage.receiverId, isGroup: true });
-        } else {
-          conversation = await Conversation.findOne({ participants: { $all: [cMessage.currentUserId, cMessage.receiverId] } });
+        if (cMessage.receiverId) {
+          if (cMessage.isGroup) {
+            conversation = await Conversation.findOne({ _id: cMessage.receiverId, isGroup: true });
+          } else {
+            conversation = await Conversation.findOne({ participants: { $all: [cMessage.currentUserId, cMessage.receiverId] } });
+          }
         }
 
         if (!conversation) {
