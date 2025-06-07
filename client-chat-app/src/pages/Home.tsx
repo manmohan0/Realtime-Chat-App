@@ -157,7 +157,7 @@ export function Home () {
         if (user && conversation) {
             const message = {
                 currentUserId: user?._id,
-                receiverId: conversation.isGroup ? conversation._id : conversation.participants[0]._id,
+                receiverId: conversation.isGroup && conversation._id,
                 isGroup: conversation.isGroup
             }
             

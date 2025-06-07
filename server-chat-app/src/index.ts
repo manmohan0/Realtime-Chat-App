@@ -48,7 +48,7 @@ wss.on('connection', (ws: WebSocket) => {
         return
       }
       case "selectConversation" : {
-        if (!cMessage.currentUserId || !cMessage.receiverId) {
+        if (!cMessage.currentUserId) {
           ws.send(JSON.stringify({ msg: 'Invalid conversation selection format' }));
           return;
         }
