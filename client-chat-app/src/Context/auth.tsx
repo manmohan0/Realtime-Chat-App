@@ -22,7 +22,7 @@ export const AuthProvider = ({ children } : { children : React.ReactNode}) => {
 
     async function fetchData() {
         const token = Cookies.get("token")
-        
+        console.log(token)
         if (!token) {
             setUser(null)
             navigate("/login")
