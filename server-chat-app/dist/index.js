@@ -69,7 +69,7 @@ wss.on('connection', (ws) => {
                         isGroup: false,
                         participants: [cMessage.currentUserId, cMessage.receiverId]
                     });
-                    newConversation.save();
+                    yield newConversation.save();
                     const receiver = yield auth_1.user.findById(cMessage.receiverId);
                     ws.send(JSON.stringify({ msg: 'Conversation not found', receiver }));
                     return;
@@ -90,7 +90,7 @@ wss.on('connection', (ws) => {
                         isGroup: false,
                         participants: [cMessage.currentUserId, cMessage.receiverId]
                     });
-                    newConversation.save();
+                    yield newConversation.save();
                     const receiver = yield auth_1.user.findById(newConversation.participants);
                     ws.send(JSON.stringify({ msg: 'Conversation not found', receiver }));
                     return;
@@ -101,7 +101,7 @@ wss.on('connection', (ws) => {
                     conversation: new mongoose_1.default.Types.ObjectId(conversation._id),
                     content: cMessage.content,
                 });
-                newMessage.save();
+                yield newMessage.save();
                 const newMsg = {
                     sender: cMessage.currentUserId,
                     conversationId: cMessage.conversationId,
@@ -130,7 +130,7 @@ wss.on('connection', (ws) => {
                     name: cMessage.name,
                     admin: [cMessage.currentUserId]
                 });
-                groupConversation.save();
+                yield groupConversation.save();
                 const participants = yield Promise.all(yield auth_1.user.find({ _id: { $in: cMessage.participants } }));
                 wss.clients.forEach(client => {
                     if (client.readyState === ws_1.default.OPEN) {
