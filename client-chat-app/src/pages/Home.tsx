@@ -41,11 +41,8 @@ export function Home () {
     useEffect(() => {
         
         if (user) {
-            console.log(user, ws.readyState, WebSocket.OPEN);
             ws.onopen = () => {
-                console.log(user, ws.readyState, WebSocket.OPEN);
                 if (user && ws.readyState === WebSocket.OPEN) {
-                    console.log("WebSocket is open, sending getConversation message");
                     ws.send(JSON.stringify({ type: "getConversation", message: { userId: user._id }, currentUserId: user._id }));
                 }
             }
@@ -273,9 +270,7 @@ export function Home () {
                                     isGroup: false,
                                     participants: conversation.participants
                                 });
-                                console.log("conversation.participants", conversation.participants);
                             }
-                            console.log("conversation.participants", conversation.participants);
                         }} className="flex w-full p-2 justify-between hover:bg-hover-electric-blue hover:cursor-pointer border-b">
                             <span className="flex flex-col w-fit">
                                 <span>
