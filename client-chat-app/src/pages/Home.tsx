@@ -44,7 +44,7 @@ export function Home () {
             console.log("WebSocket is open, sending getConversation message");
             ws.send(JSON.stringify({ type: "getConversation", message: { userId: user._id }, currentUserId: user._id }));
         }
-    }, [ws]);
+    }, [user, ws]);
 
     useEffect(() => {
 
