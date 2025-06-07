@@ -60,7 +60,7 @@ export function Home () {
                     const conversation = message.conversation as Conversation;
                     const participants = message.participants as User[];
                     const messages = message.messages as Message[];
-                    console.log(conversation.name, conversation.isGroup)
+                    console.log(conversation)
                     setCurrentConversation(conversation);
                     setCurrentParticipants(participants);
                     setMessages(messages);
