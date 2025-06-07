@@ -39,17 +39,20 @@ export function Home () {
     }, [loading, navigate, user]);
 
     useEffect(() => {
-
-        ws.onopen = () => {
-            if (user && ws.readyState === WebSocket.OPEN) {
-                console.log("WebSocket is open, sending getConversation message");
-                ws.send(JSON.stringify({ type: "getConversation", message: { userId: user._id }, currentUserId: user._id }));
+        
+        if (user) {
+            console.log(user, ws.readyState, WebSocket.OPEN);
+            ws.onopen = () => {
+                console.log(user, ws.readyState, WebSocket.OPEN);
+                if (user && ws.readyState === WebSocket.OPEN) {
+                    console.log("WebSocket is open, sending getConversation message");
+                    ws.send(JSON.stringify({ type: "getConversation", message: { userId: user._id }, currentUserId: user._id }));
+                }
             }
         }
 
         ws.onmessage = (event) => {
             const message = JSON.parse(event.data)
-
             const msg = message.msg;
 
             switch (msg) {
@@ -75,11 +78,9 @@ export function Home () {
                         setMessages(prevMessages => [...prevMessages, newMsg]);
                     }
                     setLastMessage(prevLastMessages => {
-                        console.log("Previous last messages", prevLastMessages);
                         const updated = prevLastMessages.filter(m => m.conversationId !== newMsg.conversationId);
-                        return [{ ...newMsg }, ...updated]; // Put latest at the top
+                        return [{ ...newMsg }, ...updated];
                     });
-                    // setLastMessage([...lastMessage, newMsg])
                     setCurrentMessage("");
                     break;
                 }
@@ -91,7 +92,6 @@ export function Home () {
                             return;
                         }
 
-                        // Just send the message to server to create/fetch conversation
                         ws.send(JSON.stringify({
                             type: "selectConversation",
                             message: {
@@ -101,7 +101,6 @@ export function Home () {
                             }
                         }));
 
-                        // Optional: update UI optimistically if you want
                         setShowDropdown(false);
                     }
                     break;
@@ -118,7 +117,7 @@ export function Home () {
         ws.onerror = (error) => {
             console.error('WebSocket error:', error);
         }
-    }, [ws, user, currentConversation]);
+    }, [user, ws, currentConversation]);
 
     const onSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const search = e.target.value;
@@ -296,7 +295,7 @@ export function Home () {
                 </div>
                 {currentConversation ? <div className="flex flex-col basis-2/3 justify-between">
                     <div className="flex flex-col font-bold p-4 bg-electric-blue">
-                        {/* {JSON.stringify(currentParticipants)} */}
+                        {currentConversation.name}
                         {currentConversation.isGroup ? currentConversation.name : currentParticipants?.filter((participant) => (participant._id !== user?._id)).map((participant) => (participant.name))}
                     </div>
                     
