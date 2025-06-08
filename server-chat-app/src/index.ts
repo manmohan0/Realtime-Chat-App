@@ -54,22 +54,21 @@ wss.on('connection', (ws: WebSocket) => {
         }
         
         let conversation;
-        if (cMessage.isGroup) {
-          conversation = await Conversation.findOne({ _id: cMessage.receiverId, isGroup: true });
-        } else {
-          conversation = await Conversation.findOne({ participants: { $all: [cMessage.currentUserId, cMessage.receiverId] } });
-        }
+        // if (cMessage.isGroup) {
+          // conversation = await Conversation.findOne({ _id: cMessage.receiverId, isGroup: true });
+          conversation = await Conversation.findOne({ _id: cMessage.receiverId });
+
+        // } else {
+        //   conversation = await Conversation.findOne({ participants: { $all: [cMessage.currentUserId, cMessage.receiverId] } });
+        // }
 
         if (!conversation) {
           const newConversation = await Conversation.create({
             isGroup: false,
             participants: [cMessage.currentUserId, cMessage.receiverId]
           });
-          await newConversation.save();
-
-          const receiver = await user.findById(cMessage.receiverId);
           
-          ws.send(JSON.stringify({ msg: 'Conversation not found', receiver }));
+          ws.send(JSON.stringify({ msg: 'Conversation not found', receiver: newConversation }));
           return;
         }
 

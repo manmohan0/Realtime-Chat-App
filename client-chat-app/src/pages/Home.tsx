@@ -84,7 +84,7 @@ export function Home () {
                 }
                 case 'Conversation not found': {
                     if (user && user._id) {
-                        const receiver = message.receiver as User;
+                        const receiver = message.receiver as Conversation;
                         if (!receiver || !receiver._id) {
                             console.error("Receiver not found or invalid.");
                             return;
@@ -157,17 +157,17 @@ export function Home () {
         if (user && conversation) {
             const message = {
                 currentUserId: user?._id,
-                receiverId: conversation.isGroup ? conversation._id : conversation.participants[0]._id,
+                receiverId: conversation.isGroup ? conversation._id : conversation.participants.find((p) => p._id !== user._id)?._id,
                 isGroup: conversation.isGroup
             }
             
             ws.send(JSON.stringify({ type: "selectConversation", message }));
-            setCurrentConversation({
-                _id: conversation._id,
-                name: conversation.name,
-                isGroup: conversation.isGroup,
-                participants: conversation.participants,
-            });
+            // setCurrentConversation({
+            //     _id: conversation._id,
+            //     name: conversation.name,
+            //     isGroup: conversation.isGroup,
+            //     participants: conversation.participants,
+            // });
             setShowDropdown(false);
         }
     }
@@ -274,8 +274,7 @@ export function Home () {
                         }} className="flex w-full p-2 justify-between hover:bg-hover-electric-blue hover:cursor-pointer border-b">
                             <span className="flex flex-col w-fit">
                                 <span>
-                                    
-                                    {conversation.isGroup ? conversation.name : conversation.participants.filter((participant) => participant.name !== user?.name).map((p) => p.name)}
+                                    {conversation.isGroup ? conversation.name : conversation.participants.find((participant) => participant._id !== user?._id)?.name}
                                 </span>
                                 <span>
                                     {lastMessage[id].lastMessage}
