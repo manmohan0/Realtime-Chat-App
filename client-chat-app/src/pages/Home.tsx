@@ -57,7 +57,6 @@ export function Home () {
                     const conversation = message.conversation as Conversation;
                     const participants = message.participants as User[];
                     const messages = message.messages as Message[];
-                    console.log(conversation)
                     setCurrentConversation(conversation);
                     setCurrentParticipants(participants);
                     setMessages(messages);
@@ -270,6 +269,7 @@ export function Home () {
                                     isGroup: false,
                                     participants: conversation.participants
                                 });
+                                console.log(conversation);
                             }
                         }} className="flex w-full p-2 justify-between hover:bg-hover-electric-blue hover:cursor-pointer border-b">
                             <span className="flex flex-col w-fit">
