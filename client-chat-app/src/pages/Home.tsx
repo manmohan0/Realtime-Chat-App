@@ -38,6 +38,12 @@ export function Home () {
     }, [loading, navigate, user]);
 
     useEffect(() => {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ type: 'getConversation', message: { userId: user?._id } }));
+        }
+    }, [ws, user]);
+
+    useEffect(() => {
         
         ws.onopen = () => {
             if (user) {
@@ -133,10 +139,7 @@ export function Home () {
             return;
         }
 
-        ws.send(JSON.stringify({ type: "searchUsers", message: { search } }));
-
-        // const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/getUsers`, { search });
-
+        ws.send(JSON.stringify({ type: "searchUsers", message: { search, currentUserId: user?._id } }));
     }
 
     const toggleAddMembersModal = () => {

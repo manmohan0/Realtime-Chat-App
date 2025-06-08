@@ -52,6 +52,14 @@ wss.on('connection', (ws) => {
                 });
                 return;
             }
+            case "searchUsers": {
+                if (!cMessage.search || !cMessage.currentUserId) {
+                    ws.send(JSON.stringify({ msg: 'Invalid search format' }));
+                    return;
+                }
+                const users = yield auth_1.user.find({ username: { $regex: cMessage.search, $options: 'i' } });
+                ws.send(JSON.stringify({ msg: 'Users found', users }));
+            }
             case "selectConversation": {
                 if (!cMessage.currentUserId || !cMessage.receiverId) {
                     ws.send(JSON.stringify({ msg: 'Invalid conversation selection format' }));
@@ -62,16 +70,14 @@ wss.on('connection', (ws) => {
                     conversation = yield Conversation_1.Conversation.findOne({ _id: cMessage.receiverId, isGroup: true });
                 }
                 else {
-                    conversation = yield Conversation_1.Conversation.findOne({ participants: { $all: [cMessage.currentUserId, cMessage.receiverId] } });
+                    conversation = yield Conversation_1.Conversation.findOne({ participants: { $all: [cMessage.currentUserId, cMessage.receiverId], $size: 2 } });
                 }
                 if (!conversation) {
                     const newConversation = yield Conversation_1.Conversation.create({
                         isGroup: false,
                         participants: [cMessage.currentUserId, cMessage.receiverId]
                     });
-                    yield newConversation.save();
-                    const receiver = yield auth_1.user.findById(cMessage.receiverId);
-                    ws.send(JSON.stringify({ msg: 'Conversation not found', receiver }));
+                    ws.send(JSON.stringify({ msg: 'Conversation not found', receiver: newConversation }));
                     return;
                 }
                 const participants = yield auth_1.user.find({ _id: { $in: conversation.participants } });

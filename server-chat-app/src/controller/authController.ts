@@ -161,18 +161,3 @@ export const createAccount = async (req : Request, res : Response) : Promise<voi
         return;
     }
 }
-
-export const getUsers = async (req : Request, res : Response) : Promise<void> => {
-
-    const { search } = req.body;
-
-    try {
-        const users = await user.find({ username: { $regex: search } }).limit(5);
-
-        res.json({ success: true, reason: "", users });
-        return;
-    } catch (error) {
-        res.json({ success: false, reason: "Failed to fetch users" });
-        return;
-    }
-}

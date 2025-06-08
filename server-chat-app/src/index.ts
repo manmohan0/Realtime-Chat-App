@@ -27,6 +27,7 @@ wss.on('connection', (ws: WebSocket) => {
     switch (type) {
       case "getConversation" : {
         const conversation = await Conversation.find({ participants: new mongoose.Types.ObjectId(cMessage.userId) }).populate('participants');
+        
         const lastMessage = await Promise.all(conversation.map(async (conv): Promise<any> => {
           const convMsgs = await Message.find({ 
             conversation: new mongoose.Types.ObjectId(conv._id)
@@ -48,12 +49,12 @@ wss.on('connection', (ws: WebSocket) => {
         return
       }
       case "searchUsers" : {
-        if (!cMessage.searchTerm || !cMessage.currentUserId) {
+        if (!cMessage.search || !cMessage.currentUserId) {
           ws.send(JSON.stringify({ msg: 'Invalid search format' }));
           return;
         }
 
-        const users = await user.find({ username: { $regex: cMessage.searchTerm, $options: 'i' } });
+        const users = await user.find({ username: { $regex: cMessage.search, $options: 'i' } });
         ws.send(JSON.stringify({ msg: 'Users found', users }));
         
       }
