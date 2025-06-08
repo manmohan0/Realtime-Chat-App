@@ -42,8 +42,8 @@ export function Home () {
         
         if (user) {
             ws.onopen = () => {
-                if (user && ws.readyState === WebSocket.OPEN) {
-                    ws.send(JSON.stringify({ type: "getConversation", message: { userId: user._id }, currentUserId: user._id }));
+                if (user) {
+                    ws.send(JSON.stringify({ type: "getConversation", message: { userId: user._id } }));
                 }
             }
         }
@@ -162,12 +162,6 @@ export function Home () {
             console.log("in select conversation FE",message);
             
             ws.send(JSON.stringify({ type: "selectConversation", message }));
-            // setCurrentConversation({
-            //     _id: conversation._id,
-            //     name: conversation.name,
-            //     isGroup: conversation.isGroup,
-            //     participants: conversation.participants,
-            // });
             setShowDropdown(false);
         }
     }
@@ -322,7 +316,7 @@ export function Home () {
                             </button>
                             <h2 className="text-lg font-semibold mb-4">Add Members</h2>
                             <span className="mx-3 font-bold">Group Name</span>
-                            <InputBox placeholder="Search users to add..." onInput={handleGroupName} />
+                            <InputBox placeholder="Enter Group Name" onInput={handleGroupName} />
                             <SearchBox placeholder="Search users to add..." onSearch={onSearch}/>
                             {selectedGroupUsers.length > 0 && selectedGroupUsers.map((user, id) => (
                                 <div key={id} onClick={() => addMembersinGroup(user)} className="flex justify-between items-center hover:bg-gray-200 p-2 cursor-pointer">
