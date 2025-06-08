@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { generateOtp, verifyOtp, createAccount, getUsers } from '../controller/authController'
+import { generateOtp, verifyOtp, createAccount } from '../controller/authController'
 
 const authRoutes = Router()
 
