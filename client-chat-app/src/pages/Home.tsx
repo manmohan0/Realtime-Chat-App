@@ -40,13 +40,12 @@ export function Home () {
 
     useEffect(() => {
         
-        if (user) {
-            ws.onopen = () => {
-                if (user) {
-                    ws.send(JSON.stringify({ type: "getConversation", message: { userId: user._id } }));
-                }
+        ws.onopen = () => {
+            if (user) {
+                ws.send(JSON.stringify({ type: "getConversation", message: { userId: user._id } }));
             }
         }
+        
 
         ws.onmessage = (event) => {
             const message = JSON.parse(event.data)
