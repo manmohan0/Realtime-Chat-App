@@ -88,18 +88,18 @@ export function Home () {
                 }
                 case 'Conversation not found': {
                     if (user && user._id) {
-                        const receiver = message.receiver as Conversation;
-                        if (!receiver || !receiver._id) {
+                        const receiverId = message.receiver;
+                        if (!receiverId) {
                             console.error("Receiver not found or invalid.");
                             return;
                         }
-                        console.log("Receiver found", receiver);
+                        console.log("Receiver found", receiverId);
 
                         ws.send(JSON.stringify({
                             type: "selectConversation",
                             message: {
                                 currentUserId: user._id,
-                                receiverId: receiver._id,
+                                receiverId: receiverId,
                                 isGroup: false
                             }
                         }));
