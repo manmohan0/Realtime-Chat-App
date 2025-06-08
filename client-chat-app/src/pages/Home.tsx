@@ -270,7 +270,7 @@ export function Home () {
                                     isGroup: false,
                                     participants: conversation.participants
                                 });
-                                console.log("conversations FE", conversation
+                                console.log("conversations FE", conversation);
                             }
                         }} className="flex w-full p-2 justify-between hover:bg-hover-electric-blue hover:cursor-pointer border-b">
                             <span className="flex flex-col w-fit">
