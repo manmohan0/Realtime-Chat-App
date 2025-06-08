@@ -267,7 +267,7 @@ export function Home () {
                                 selectConversation({
                                     _id: conversation._id,
                                     name: conversation.isGroup ? conversation.name : conversation.participants.filter((participant) => participant.name !== user?.name).map((p) => p.name)[0],
-                                    isGroup: false,
+                                    isGroup: conversation.isGroup,
                                     participants: conversation.participants
                                 });
                                 console.log("conversations FE", conversation);
