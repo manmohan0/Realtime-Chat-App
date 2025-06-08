@@ -77,6 +77,7 @@ export function Home () {
                         const updated = prevLastMessages.filter(m => m.conversationId !== newMsg.conversationId);
                         return [{ ...newMsg }, ...updated];
                     });
+                    ws.send(JSON.stringify({ type: "getConversation", message: { userId: user?._id } }));
                     setCurrentMessage("");
                     break;
                 }
