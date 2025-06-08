@@ -159,7 +159,7 @@ export function Home () {
                 receiverId: conversation.isGroup ? conversation._id : conversation.participants.find((p) => p._id !== user._id)?._id,
                 isGroup: conversation.isGroup
             }
-            console.log(message);
+            console.log("in select conversation FE",message);
             
             ws.send(JSON.stringify({ type: "selectConversation", message }));
             // setCurrentConversation({
@@ -270,6 +270,7 @@ export function Home () {
                                     isGroup: false,
                                     participants: conversation.participants
                                 });
+                                console.log("conversations FE", conversation
                             }
                         }} className="flex w-full p-2 justify-between hover:bg-hover-electric-blue hover:cursor-pointer border-b">
                             <span className="flex flex-col w-fit">
