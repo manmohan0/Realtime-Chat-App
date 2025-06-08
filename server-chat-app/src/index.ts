@@ -47,6 +47,16 @@ wss.on('connection', (ws: WebSocket) => {
           }})
         return
       }
+      case "searchUsers" : {
+        if (!cMessage.searchTerm || !cMessage.currentUserId) {
+          ws.send(JSON.stringify({ msg: 'Invalid search format' }));
+          return;
+        }
+
+        const users = await user.find({ username: { $regex: cMessage.searchTerm, $options: 'i' } });
+        ws.send(JSON.stringify({ msg: 'Users found', users }));
+        
+      }
       case "selectConversation" : {
         if (!cMessage.currentUserId || !cMessage.receiverId) {
           ws.send(JSON.stringify({ msg: 'Invalid conversation selection format' }));

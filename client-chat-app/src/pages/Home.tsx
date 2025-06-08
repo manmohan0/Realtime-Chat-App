@@ -108,7 +108,15 @@ export function Home () {
                     const participants = message.receivers as User[];
                     setCurrentConversation(groupConversation);
                     setCurrentParticipants(participants);
+                    break
                 }
+                case 'Users found': {
+                    const users = message.users as User[];
+                    setDropdownUsers(users);
+                    setShowDropdown(true);
+                    break
+                }
+                    
             }
         }
 
@@ -126,12 +134,10 @@ export function Home () {
             return;
         }
 
-        const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/getUsers`, { search });
+        ws.send(JSON.stringify({ type: "searchUsers", message: { search } }));
 
-        if (res && res.data.success) {
-            setDropdownUsers(res.data.users);
-            setShowDropdown(true);
-        }
+        // const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/getUsers`, { search });
+
     }
 
     const toggleAddMembersModal = () => {
