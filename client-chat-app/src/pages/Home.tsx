@@ -159,6 +159,7 @@ export function Home () {
                 receiverId: conversation.isGroup ? conversation._id : conversation.participants.find((p) => p._id !== user._id)?._id,
                 isGroup: conversation.isGroup
             }
+            console.log(message);
             
             ws.send(JSON.stringify({ type: "selectConversation", message }));
             // setCurrentConversation({
