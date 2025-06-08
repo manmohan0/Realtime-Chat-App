@@ -233,7 +233,7 @@ export function Home () {
                     </div>
                     <SearchBox placeholder={"Search"} onSearch={onSearch}/>
                     {!showAddMembersModal && showDropdown && dropdownUsers.length > 0 && (
-                        <div className="m-2 bg-white hover:bg-hover-electric-blue shadow-md rounded-md max-h-64 overflow-y-auto absolute w-11/12 ">
+                        <div className="m-2 bg-white shadow-md rounded-md max-h-64 overflow-y-auto absolute w-11/12 ">
                             {dropdownUsers.map((dropdownUser) => (
                             <div
                                 key={dropdownUser._id}
@@ -247,7 +247,7 @@ export function Home () {
                                         });
                                     };
                                 }}
-                                className="flex flex-col p-2 cursor-pointer">
+                                className="flex flex-col p-2 cursor-pointer hover:bg-hover-electric-blue">
                                 <span className="w-fit font-semibold">{dropdownUser.name}</span>
                                 <span className="w-fit text-sm text-gray-500">{dropdownUser.username}</span>
                             </div>
