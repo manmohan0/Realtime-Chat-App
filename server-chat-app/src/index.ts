@@ -77,7 +77,7 @@ wss.on('connection', (ws: WebSocket) => {
             participants: [cMessage.currentUserId, cMessage.receiverId]
           });
           
-          ws.send(JSON.stringify({ msg: 'Conversation not found', receiver: newConversation }));
+          ws.send(JSON.stringify({ msg: 'Conversation not found', receiver: cMessage.receiverId }));
           return;
         }
 
