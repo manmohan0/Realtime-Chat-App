@@ -54,6 +54,7 @@ wss.on('connection', (ws: WebSocket) => {
         }
         
         let conversation;
+        console.log("cMessage.isGroup", cMessage.isGroup)
         if (cMessage.isGroup) {
           console.log(cMessage)
           console.log("isGroup", cMessage.isGroup)
