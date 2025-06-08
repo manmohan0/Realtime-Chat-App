@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from "../Context/auth";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import axios from "axios";
 import type { User, Message, Conversation } from "../types";
 import toast, { Toaster } from "react-hot-toast";
 
