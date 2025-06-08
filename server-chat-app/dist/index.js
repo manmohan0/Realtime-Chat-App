@@ -136,7 +136,6 @@ wss.on('connection', (ws) => {
                     name: cMessage.name,
                     admins: [cMessage.currentUserId]
                 });
-                console.log('Group conversation created:', groupConversation);
                 const participants = yield Promise.all(yield auth_1.user.find({ _id: { $in: cMessage.participants } }));
                 wss.clients.forEach(client => {
                     if (client.readyState === ws_1.default.OPEN) {

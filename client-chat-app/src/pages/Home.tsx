@@ -112,6 +112,7 @@ export function Home () {
                     const participants = message.receivers as User[];
                     setCurrentConversation(groupConversation);
                     setCurrentParticipants(participants);
+                    ws.send(JSON.stringify({ type: "getConversation", message: { userId: user?._id } }));
                     break
                 }
                 case 'Users found': {
