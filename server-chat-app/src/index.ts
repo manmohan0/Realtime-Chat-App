@@ -116,7 +116,6 @@ wss.on('connection', (ws: WebSocket) => {
           conversation: new mongoose.Types.ObjectId(conversation._id),
           content: cMessage.content,
         })
-        await newMessage.save();
 
         const newMsg = {
           sender: cMessage.currentUserId,
@@ -135,7 +134,7 @@ wss.on('connection', (ws: WebSocket) => {
             });
           }
         });
-
+        break;
       }
       case "createGroupConversation" : {
         
