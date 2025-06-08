@@ -77,13 +77,13 @@ wss.on('connection', (ws) => {
                         isGroup: false,
                         participants: [cMessage.currentUserId, cMessage.receiverId]
                     });
-                    ws.send(JSON.stringify({ msg: 'Conversation not found', receiver: newConversation }));
+                    ws.send(JSON.stringify({ msg: 'Conversation not found', receiver: cMessage.receiverId }));
                     return;
                 }
                 const participants = yield auth_1.user.find({ _id: { $in: conversation.participants } });
                 const messages = yield Conversation_1.Message.find({ conversation: conversation._id });
                 ws.send(JSON.stringify({ msg: 'Conversation selected', conversation, participants, messages }));
-                break;
+                return;
             }
             case 'sendMessage': {
                 if (!cMessage.currentUserId || !cMessage.conversationId || !cMessage.content) {
@@ -123,7 +123,7 @@ wss.on('connection', (ws) => {
                         });
                     }
                 });
-                break;
+                return;
             }
             case "createGroupConversation": {
                 if (!cMessage.currentUserId || !cMessage.participants || !cMessage.name) {
@@ -134,9 +134,9 @@ wss.on('connection', (ws) => {
                     isGroup: true,
                     participants: cMessage.participants,
                     name: cMessage.name,
-                    admin: [cMessage.currentUserId]
+                    admins: [cMessage.currentUserId]
                 });
-                yield groupConversation.save();
+                console.log('Group conversation created:', groupConversation);
                 const participants = yield Promise.all(yield auth_1.user.find({ _id: { $in: cMessage.participants } }));
                 wss.clients.forEach(client => {
                     if (client.readyState === ws_1.default.OPEN) {

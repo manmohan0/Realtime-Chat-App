@@ -142,15 +142,14 @@ wss.on('connection', (ws: WebSocket) => {
           ws.send(JSON.stringify({ msg: 'Invalid group conversation format' }));
           return;
         }
-
+        
         const groupConversation = await Conversation.create({
           isGroup: true,
           participants: cMessage.participants,
           name: cMessage.name,
-          admin: [cMessage.currentUserId]
+          admins: [cMessage.currentUserId]
         });
-        await groupConversation.save();
-
+        
         const participants = await Promise.all(await user.find({ _id: { $in: cMessage.participants } }));
 
         wss.clients.forEach(client => {

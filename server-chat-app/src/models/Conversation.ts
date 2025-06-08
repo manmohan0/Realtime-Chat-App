@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const conversationSchema = new mongoose.Schema({
   isGroup: { type: Boolean, default: false },
-  name: { type: String }, // for groups
+  name: { type: String },
   participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   admins: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   time: { type: String, default: () =>

@@ -93,7 +93,6 @@ export function Home () {
                             console.error("Receiver not found or invalid.");
                             return;
                         }
-                        console.log("Receiver found", receiverId);
 
                         ws.send(JSON.stringify({
                             type: "selectConversation",
@@ -168,7 +167,6 @@ export function Home () {
                 receiverId: conversation.isGroup ? conversation._id : conversation.participants.find((p) => p._id !== user._id)?._id,
                 isGroup: conversation.isGroup
             }
-            console.log("in select conversation FE",message);
             
             ws.send(JSON.stringify({ type: "selectConversation", message }));
             setShowDropdown(false);
@@ -273,7 +271,6 @@ export function Home () {
                                     isGroup: conversation.isGroup,
                                     participants: conversation.participants
                                 });
-                                console.log("conversations FE", conversation);
                             }
                         }} className="flex w-full p-2 justify-between hover:bg-hover-electric-blue hover:cursor-pointer border-b">
                             <span className="flex flex-col w-fit">

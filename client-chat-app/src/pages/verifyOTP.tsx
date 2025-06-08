@@ -20,7 +20,7 @@ export function VerifyOTP () {
 
     const verifyOTP = async () => {
         const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/verifyOtp`, { email, otp });
-        console.log(res.data);
+        
         if (res && res.data.success && res.data.reason === "") {
             Cookies.set("token", res.data.token);
             toast.success("OTP verified successfully.");
