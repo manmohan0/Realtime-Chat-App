@@ -86,7 +86,7 @@ wss.on('connection', (ws: WebSocket) => {
         const messages = await Message.find({ conversation: conversation._id });
         
         ws.send(JSON.stringify({ msg: 'Conversation selected', conversation, participants, messages }));
-        break;
+        return;
       }
       case 'sendMessage': {
         if (!cMessage.currentUserId || !cMessage.conversationId || !cMessage.content) {  
@@ -134,7 +134,7 @@ wss.on('connection', (ws: WebSocket) => {
             });
           }
         });
-        break;
+        return  ;
       }
       case "createGroupConversation" : {
         

@@ -8,4 +8,3 @@ exports.authRoutes = authRoutes;
 authRoutes.post('/generateOtp', authController_1.generateOtp);
 authRoutes.post('/verifyOtp', authController_1.verifyOtp);
 authRoutes.post('/createAccount', authController_1.createAccount);
-authRoutes.post('/getUsers', authController_1.getUsers);

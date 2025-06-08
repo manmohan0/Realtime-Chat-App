@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = exports.createAccount = exports.verifyOtp = exports.generateOtp = void 0;
+exports.createAccount = exports.verifyOtp = exports.generateOtp = void 0;
 const zod_1 = require("zod");
 const redis_1 = require("../config/redis");
 const auth_1 = require("../models/auth");
@@ -141,16 +141,3 @@ const createAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.createAccount = createAccount;
-const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { search } = req.body;
-    try {
-        const users = yield auth_1.user.find({ username: { $regex: search } }).limit(5);
-        res.json({ success: true, reason: "", users });
-        return;
-    }
-    catch (error) {
-        res.json({ success: false, reason: "Failed to fetch users" });
-        return;
-    }
-});
-exports.getUsers = getUsers;

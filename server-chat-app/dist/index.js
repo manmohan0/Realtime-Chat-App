@@ -107,7 +107,6 @@ wss.on('connection', (ws) => {
                     conversation: new mongoose_1.default.Types.ObjectId(conversation._id),
                     content: cMessage.content,
                 });
-                yield newMessage.save();
                 const newMsg = {
                     sender: cMessage.currentUserId,
                     conversationId: cMessage.conversationId,
@@ -124,6 +123,7 @@ wss.on('connection', (ws) => {
                         });
                     }
                 });
+                break;
             }
             case "createGroupConversation": {
                 if (!cMessage.currentUserId || !cMessage.participants || !cMessage.name) {
