@@ -88,6 +88,7 @@ export function Home () {
                             console.error("Receiver not found or invalid.");
                             return;
                         }
+                        console.log("Receiver found", receiver);
 
                         ws.send(JSON.stringify({
                             type: "selectConversation",

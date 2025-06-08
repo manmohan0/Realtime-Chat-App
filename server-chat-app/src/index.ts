@@ -54,13 +54,8 @@ wss.on('connection', (ws: WebSocket) => {
         }
         
         let conversation;
-        console.log("cMessage.isGroup", cMessage.isGroup)
         if (cMessage.isGroup) {
-          console.log(cMessage)
-          console.log("isGroup", cMessage.isGroup)
           conversation = await Conversation.findOne({ _id: cMessage.receiverId, isGroup: true });
-          // conversation = await Conversation.findOne({ _id: cMessage.receiverId });
-        // console.log(conversation)
         } else {
           conversation = await Conversation.findOne({ participants: { $all: [cMessage.currentUserId, cMessage.receiverId], $size: 2 } });
         }
