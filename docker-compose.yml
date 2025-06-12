@@ -1,0 +1,46 @@
+services:
+  client:
+    build:
+      context: ./client-chat-app
+      dockerfile: Dockerfile
+    ports:
+      - 5173:5173
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: ./server-chat-app
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongodb
+      - redis
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis
+    container_name: realtime-chat-app-redis
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongodb_data:
